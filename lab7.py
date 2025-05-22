@@ -18,16 +18,21 @@ df['LSTAT'].fillna(df['LSTAT'].median(), inplace=True)
 df['CHAS'].fillna(df['CHAS'].mode()[0], inplace=True)
 
 
-# Histogram & Boxplot for LSTAT
-feature = 'LSTAT'
-plt.figure(figsize=(10, 4))
-plt.subplot(1, 2, 1)
-df[feature].hist(bins=20, edgecolor='black', color='skyblue')
-plt.title(f'Histogram of {feature}')
-plt.subplot(1, 2, 2)
-plt.boxplot(df[feature], vert=False)
-plt.title(f'Boxplot of {feature}')
-plt.show()
+# Histogram & Boxplot 
+for feature in df.columns:
+    plt.figure(figsize=(10, 4))
+    plt.subplot(1, 2, 1)
+    df[feature].hist(bins=20, edgecolor='black', color='skyblue')
+    plt.title(f'Histogram of {feature}')
+    plt.xlabel(feature)
+    
+    plt.subplot(1, 2, 2)
+    plt.boxplot(df[feature], vert=False)
+    plt.title(f'Boxplot of {feature}')
+    plt.xlabel(feature)
+    
+    plt.tight_layout()
+    plt.show()
 
 # Correlation heatmap
 plt.figure(figsize=(10, 8))
