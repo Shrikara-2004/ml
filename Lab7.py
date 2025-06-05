@@ -57,3 +57,44 @@ r2 = r2_score(y_test, y_pred)
 print(f"Mean Squared Error: {mse}")
 print(f"Root Mean Squared Error: {rmse}")
 print(f"R-squared: {r2}")
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+import seaborn as sns
+
+# Load Auto MPG dataset
+auto = sns.load_dataset("mpg").dropna()
+
+X = auto[['horsepower']].values
+y = auto['mpg'].values
+
+# Polynomial transformation (degree = 2)
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+
+# Fit polynomial regression model
+model = LinearRegression()
+model.fit(X_poly, y)
+
+# Predict
+y_pred = model.predict(X_poly)
+
+# Plot
+plt.scatter(X, y, color='blue', label='Actual')
+plt.plot(X, y_pred, color='red', label='Predicted')
+plt.xlabel("Horsepower")
+plt.ylabel("MPG")
+plt.title("Polynomial Regression (Horsepower vs MPG)")
+plt.legend()
+plt.show()
+
+# Evaluation
+print("\nPolynomial Regression - Auto MPG")
+print("R² Score:", round(r2_score(y, y_pred), 2))
+print("MSE:", round(mean_squared_error(y, y_pred), 2))
+
